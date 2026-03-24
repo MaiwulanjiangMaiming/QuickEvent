@@ -1,40 +1,47 @@
-# Calendar ICS Generation Helper (ver0.1)
+# QuickEvent
 
-This is a trial version (ver0.1) of the Calendar ICS Generation Helper.
-
-## Description
-A desktop application built with Python and PyQt6 that allows users to input tasks and generate `.ics` calendar files. These files can be imported into calendar applications like Apple Calendar, Google Calendar, and Outlook.
+A macOS menu bar app for creating calendar events using natural language.
 
 ## Features
-- GUI interface for easy task entry.
-- Generate `.ics` files compatible with major calendar apps.
-- Task management (add, list).
+
+- **Natural Language Parsing**: Create events by typing naturally (English, Chinese, Arabic, French, Russian, Spanish)
+- **Voice Input**: Speak to create events hands-free
+- **Calendar Integration**: Directly add events to your macOS Calendar
+- **ICS Export**: Export events as .ics files for sharing
+- **Multiple Calendars**: Select from all your calendars (writable and read-only)
 
 ## Requirements
-- Python 3.x
-- PyQt6
-- ics
-- rich
+
+- macOS 13.0 or later
+- Calendar access permission
+- Microphone access (for voice input)
 
 ## Installation
 
-1. Clone the repository:
-   ```bash
-   git clone <repository_url>
-   cd Calendar_ics_generation_helper
-   ```
-
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+1. Download `QuickEvent-1.0.0.dmg`
+2. Open the DMG file
+3. Drag QuickEvent to your Applications folder
+4. Launch QuickEvent from Applications
 
 ## Usage
 
-Run the application:
+1. Click the calendar icon in the menu bar
+2. Type or speak your event (e.g., "Tomorrow 3 PM meeting with John, 1 hour")
+3. Select the target calendar
+4. Click "Add to Calendar" or "Export ICS"
+
+### Keyboard Shortcuts
+
+- `⌘⇧V`: Toggle voice input
+- `Enter`: Parse input
+
+## Building from Source
+
 ```bash
-python calendar_app.py
+cd QuickEvent
+swift build -c release --arch arm64 --arch x86_64
 ```
 
 ## License
+
 [MIT License](LICENSE)
