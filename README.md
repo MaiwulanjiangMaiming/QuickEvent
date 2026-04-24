@@ -37,10 +37,39 @@ A macOS menu bar app for creating calendar events using natural language.
 
 ## Building from Source
 
+### Using Xcode (Recommended)
+
 ```bash
 cd QuickEvent
-swift build -c release --arch arm64 --arch x86_64
+xcodegen generate        # Generate .xcodeproj (requires XcodeGen)
+open QuickEvent.xcodeproj
 ```
+
+Then select the QuickEvent scheme and press ⌘R to run.
+
+### Using Swift Package Manager
+
+```bash
+cd QuickEvent
+swift build --disable-sandbox
+swift run --disable-sandbox
+```
+
+### Prerequisites
+
+- [XcodeGen](https://github.com/yonaskolb/XcodeGen) (for Xcode-based builds)
+- Swift 5.9+
+
+## Architecture
+
+QuickEvent follows a clean architecture with clear separation of concerns:
+
+- **Protocols/**: Contract definitions for services (EventParsing, CalendarManaging, ICSExporting, VoiceRecognizing)
+- **Parsers/**: Modular natural language parsing pipeline (DateParser, TimeParser, DurationParser, etc.)
+- **Managers/**: Application managers (WindowManager, StatusBarManager, HotkeyManager, PermissionManager)
+- **State/**: Centralized application state (AppState)
+- **Services/**: Core services (EventKitManager, ICSGenerator, AppLogger)
+- **Views/Shared/**: Reusable UI components
 
 ## License
 

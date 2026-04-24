@@ -74,9 +74,13 @@ struct VoiceInputButton: View {
     }
 }
 
-class SpeechRecognizer: NSObject, ObservableObject {
+class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate, VoiceRecognizing {
     @Published var transcript: String = ""
     @Published var authorizationStatus: SFSpeechRecognizerAuthorizationStatus = .notDetermined
+
+    var isRecording: Bool {
+        return audioEngine.isRunning
+    }
     
     private var speechRecognizer: SFSpeechRecognizer?
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
@@ -166,7 +170,7 @@ class SpeechRecognizer: NSObject, ObservableObject {
                 let speechTimeoutCode = 216
                 
                 if error.code != noSpeechErrorCode && error.code != speechTimeoutCode {
-                    print("Speech recognition error: \(error.localizedDescription) (code: \(error.code))")
+                    AppLogger.speech.error("Speech recognition error: \(error.localizedDescription) (code: \(error.code))")
                 }
                 
                 DispatchQueue.main.async {
@@ -190,7 +194,7 @@ class SpeechRecognizer: NSObject, ObservableObject {
         do {
             try audioEngine.start()
         } catch {
-            print("Audio engine start failed: \(error)")
+            AppLogger.speech.error("Audio engine start failed: \(error)")
             cleanup()
         }
         
@@ -236,10 +240,10 @@ class SpeechRecognizer: NSObject, ObservableObject {
     }
 }
 
-extension SpeechRecognizer: SFSpeechRecognizerDelegate {
+extension SpeechRecognizer {
     func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
         if !available {
-            print("Speech recognizer unavailable")
+            AppLogger.speech.warning("Speech recognizer unavailable")
         }
     }
 }
